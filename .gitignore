@@ -5,3 +5,5 @@ inst/po/
 
 *.history
 .Rproj.user
+packrat/lib*/
+packrat/src/
