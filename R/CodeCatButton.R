@@ -222,7 +222,10 @@ and treecode.catid=codecat.catid and freecode.id=treecode.cid and codecat.name i
   Encoding(ans$parent) <- "UTF-8"
   Encoding(ans$child) <- "UTF-8"
   file = paste(tempfile(), "html", sep=".")
-  d3Network::d3SimpleNetwork(ans, width = gdkScreenWidth(), height = gdkScreenHeight(), file=file(file, encoding="UTF-8"))
+  d3Network::d3SimpleNetwork(ans, width = 500, height = 500,
+                             #width = gdkScreenWidth(),
+                             #height = gdkScreenHeight(),
+                             file=file(file, encoding="UTF-8"))
   browseURL(file)
 }
 
