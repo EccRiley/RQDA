@@ -8,7 +8,8 @@ if (isTRUE(.rqda$isLaunched)) {
  } else
 {
   ".root_rqdagui" <- gwindow(title = gettext("RQDA: Qualitative Data Analysis", domain = "R-RQDA"),parent=c(2,2),
-                             width=300,height=(gdkScreenHeight()-65),
+                             # width=300,height=(gdkScreenHeight()-65),
+                             width=300,height=(500),
                              visible=FALSE,handler=function(h,...){
                                closeProject(assignenv=.rqda)
                              }

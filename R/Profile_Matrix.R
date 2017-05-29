@@ -1,6 +1,6 @@
 prof_mat <- function(unit = c("coding", "file"), case_ids = NULL, case_names = NULL){
     unit <- match.arg(unit)
-    
+
     if (is.null(case_ids) & is.null(case_names)) {
       case_ids <- getCaseIds()
       case_names <- getCaseNames(case_ids)
@@ -9,12 +9,13 @@ prof_mat <- function(unit = c("coding", "file"), case_ids = NULL, case_names = N
     } else {
       case_ids <- RQDAQuery(sprintf("select id from cases where name in (%s)", paste(shQuote(case_names), collapse=",")))$id
     }
-    
+
     codes <- RQDAQuery("select name, id, cid from freecode, coding where freecode.id=coding.cid and freecode.status=1 group by cid order by name")
     Encoding(codes$name) <- "UTF-8"
-    
-    wnh <- size(.rqda$.root_rqdagui)  
-    w <- gwindow(title=sprintf(gettext("Profile Matrix - %s", domain = "R-RQDA"), unit), height=(gdkScreenHeight()-100), width=500,visible=FALSE, parent = c(wnh[1]+10, 2))
+
+    wnh <- size(.rqda$.root_rqdagui)
+    w <- gwindow(title=sprintf(gettext("Profile Matrix - %s", domain = "R-RQDA"), unit), height = 500, #height=(gdkScreenHeight()-100),
+                 width=500,visible=FALSE, parent = c(wnh[1]+10, 2))
     gf <- ggroup(container=w, use.scrollwindow=TRUE)
     tbl <- glayout(container = gf, expand=FALSE)
 
@@ -38,8 +39,8 @@ prof_mat <- function(unit = c("coding", "file"), case_ids = NULL, case_names = N
                                file = sum(ncoded$fid %in% fid)
                                )
           }
-          tbl[i+1,col+1] <- gcheckbox(formatC(ncodings,width=4), container=tbl, use.togglebutton=TRUE, 
-                                        action=list(code=codes$name[i], fid=fid), 
+          tbl[i+1,col+1] <- gcheckbox(formatC(ncodings,width=4), container=tbl, use.togglebutton=TRUE,
+                                        action=list(code=codes$name[i], fid=fid),
                                         handler=function(h,...) {
                                         #cat("The widget is checked?",svalue(h$obj), "\n")
                 retrieval_by_code(Fid=h$action$fid, code=h$action$code)
